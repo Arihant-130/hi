@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Chat Box</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #f3f3f3, #d6d6d6);
+            margin: 0;
+        }
+
+        .chat-container {
+            width: 500px;
+            height: 700px;
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .chat-box {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        .chat-box::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-box::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        .message {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 18px;
+            max-width: 75%;
+            word-wrap: break-word;
+            font-size: 16px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* User message */
+        .re {
+            background: #007aff;
+            color: white;
+            align-self: flex-end;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Bot message */
+        .se {
+            background: #e5e5ea;
+            color: black;
+            align-self: flex-start;
+        }
+
+        /* Message timestamp */
+        .time {
+            font-size: 12px;
+            color: gray;
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        /* Reply messages */
+        .reply,
+        .replyr {
+            background: #f0f0f0;
+            color: gray;
+            font-size: 12px;
+            padding: 3px 8px;
+            margin: -3px 0 5px;
+            border-radius: 10px;
+        }
+
+        .reply {
+            align-self: flex-start;
+        }
+
+        .replyr {
+            align-self: flex-end;
+        }
+
+        /* Real-time messages */
+        .real {
+            background: #4caf50;
+            color: white;
+            align-self: flex-end;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 75%;
+            font-size: 15px;
+        }
+
+        /* Emoji Styling */
+        .emoji {
+            font-size: 80px;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .chat-container {
+                width: 90%;
+                height: 90vh;
+            }
+
+            .message {
+                font-size: 14px;
+                max-width: 80%;
+            }
+
+            .emoji {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-box" id="chatBox">
+            <div class="time">Wed 6:32 AM</div>
+
+            <div class="message re">Hi</div>
+            <div class="message re">GM</div>
+
+            <div class="time">Wed 4:09 PM</div>
+
+            <div class="message re">Yo</div>
+            <div class="message re">Kal chalo gi mlb</div>
+
+            <div class="message time">Wed 8:59 PM</div>
+            <div class="message reply">Kal chalo gi mlb</div>
+
+            <div class="message se">Haa jayege na</div>
+            <div class="message se">Me lekin mere doosre dosto k sath jaugi
+            </div>
+            <div class="message se emoji">😥</div>
+            <div class="message se">Siddhi k sath nhie</div>
+
+            <div class="message time">Wed 9:23 PM</div>
+
+            <div class="message replyr">Siddhi k sath nhie</div>
+            <div class="message re">Acha</div>
+            <div class="message re">Koi na</div>
+            <div class="message re">Use puch na par aryan yad kar rha he tum dono ko</div>
+
+            <div class="message time">Wed 11:02 PM</div>
+
+            <div class="message reply">Use puch na par aryan yad kar rha he tum dono ko</div>
+            <div class="message se">Sahi m?</div>
+
+            <div class="message time">Thu 5:09 AM</div>
+
+            <div class="message replyr">Sahi m?</div>
+            <div class="message re">Ha</div>
+
+            <div class="message time">Thu 10:06 AM</div>
+
+            <div class="message se">Srf siddhi ko kr re ho..pta h mujhe</div>
+
+            <div class="message replyr">Srf siddhi ko kr re ho..pta h mujhe</div>
+            <div class="message re">Kya</div>
+            <div class="message replyr">Srf siddhi ko kr re ho..pta h mujhe</div>
+            <div class="message re">Kya Kara siddhi ko hamne</div>
+            <div class="message re">Or ha congratulations</div>
+
+            <div class="message time">Thu 2:52 PM</div>
+
+            <div class="message real">Real send </div>
+            <div class="message re">Ye dekh siddhi tharki</div>
+
+            <div class="message time">Thu 5:43 PM</div>
+
+            <div class="message reply">Or ha congratulations</div>
+            <div class="message se">Kyooooo</div>
+            <div class="message se">Mene kya krdiya</div>
+            <div class="message reply">Ye dekh siddhi tharki</div>
+            <div class="message se">💀💀maiyo</div>
+
+            <div class="message replyr">Mene kya krdiya</div>
+            <div class="message re">Ajj jaldi uth gai thi na</div>
+            <div class="message replyr">💀💀maiyo</div>
+            <div class="message re">Shi to bola</div>
+            <div class="message reply">Ajj jaldi uth gai thi na</div>
+            <div class="message se">Oo hannn .me apne dost k sang gaya tha.siddhi k sath nhi</div>
+            <div class="message se">MLB m mere ek dost k mummy papa aate to wha nhi aaye the hum</div>
+            <div class="message replyr">MLB m mere ek dost k mummy papa aate to wha nhi aaye the hum</div>
+            <div class="message re">O acha</div>
+            <div class="message re">To kal ai gi</div>
+            <div class="message re">Tum bese itna late reply kio kar ti ho</div>
+
+            <div class="message reply">Tum bese itna late reply kio kar ti ho</div>
+            <div class="message se emoji">😭</div>
+            <div class="message reply">To kal ai gi</div>
+            <div class="message se">Neend khulne pr depend krta h😭😭</div>
+
+            <div class="message replyr">Neend khulne pr depend krta h😭😭</div>
+            <div class="message re">O</div>
+
+            <div class="message reply">Tum bese itna late reply kio kar ti ho</div>
+            <div class="message se">🥹🥹 wo to m ....🥹🥹 Koi reason nhi h iska merpr</div>
+
+            <div class="message replyr">🥹🥹 wo to m ....🥹🥹 Koi reason nhi h iska merpr</div>
+            <div class="message re">Pagal ho to</div>
+            <div class="message re">Acha byy me abhi tution pe hu bad me dekh ta hu bese bo siddhi hi thi na</div>
+            <div class="message real reply">real reply</div>
+            <div class="message re">Ye</div>
+
+            <div class="message reply">Pagal ho to</div>
+            <div class="message se emoji">💀</div>
+            <div class="message se">Nhi hu m</div>
+
+            <div class="message replyr">💀 Nhi hu m</div>
+            <div class="message re">Hi</div>
+
+            <div class="message reply">Acha byy me abhi tution pe hu bad me dekh ta hu bese bo siddhi hi thi na</div>
+            <div class="message se emoji">💀💀</div>
+            <div class="message se ">Tuition pr ho💀pdhlo💀 tum... Heavy baatein kr re</div>
+
+            <div class="message replyr">Tuition pr ho💀pdhlo💀 tum... Heavy baatein kr re</div>
+            <div class="message re">Are abhi class start nhi hui</div>
+            <div class="message re">Acha byy me 8 baje ke bad auga ab insta pe</div>
+
+            <div class="message se">okkkkeyeye beyeyeye✨✨</div>
+
+            <div class="message time">Fri 5:46 AM</div>
+            <div class="message real">Story reply</div>
+            <div class="message re">Thodi achi editing nhi kar sakti thi</div>
+
+            <div class="message time">You set the nickname for Anieee! to ana dosa bali.</div>
+            <div class="message time">You changed the theme to Astrology</div>
+            <div class="message time"> Fri 1:19 PM</div>
+
+            <div class="message reply">Thodi achi editing nhi kar sakti thi</div>
+            <div class="message se">achi hi h😭😤</div>
+
+            <div class="message replyr">achi hi h😭😤</div>
+            <div class="message re">Nhi he</div>
+            <div class="message replyr">achi hi h😭😤</div>
+            <div class="message re">Watermark to hata ti</div>
+
+            <div class="message time">Fri 2:20 PM</div>
+
+            <div class="message reply">Nhi he</div>
+            <div class="message se">Hega.... Bhadia lagra moye😭</div>
+
+            <div class="message replyr">Hega.... Bhadia lagra moye😭</div>
+            <div class="message re">Toye bhadiya lagne se ka hoto</div>
+
+            <div class="message tiem">Fri 8:38 PM</div>
+            
+            <div class="message reply">Toye bhadiya lagne se ka hoto</div>
+            <div class="message se">Sabko lagi 🙂‍↕️bhadia</div>
+
+            <div class="message time">Fri 9:40 PM</div>
+
+            <div class="message replyr">Sabko lagi 🙂‍↕️bhadia</div>
+            <div class="message re">Moye na lagi</div>
+
+            <div class="message time">Sat 1:56 AM</div>
+
+            <div class="message reply">Moye na lagi</div>
+            <div class="message se">Tumhari pasand kharab h
+            </div>
+
+            <div class="message time">Sat 5:21 AM</div>
+
+            <div class="message replyr">Tumhari pasand kharab h
+            </div>
+            <div class="message re">Tum hari he</div>
+
+            <div class="message time">Sun 1:21 AM</div>
+
+            <div class="message reply">Tum hari he</div>
+            <div class="message se">Hein!</div>
+            <div class="message se"> Ana Dosa Bali</div>
+            <div class="message se">Tumhe</div>
+            <div class="message se">Ana Dosa Bali</div>
+            <div class="message se">Kese pta</div>
+            <div class="message se">Ana Dosa Bali</div>
+            <div class="message se">Tumne kab dekhliya meri pasand ko</div>
+            <div class="message se emoji">😥</div>
+
+            <div class="message time">Sun 6:02 AM</div>
+
+            <div class="message real">Story reply</div>
+            <div class="message re">11 Or 12 bhi he Abhi</div>
+            <div class="message replyr">Tumne kab dekhliya meri pasand ko</div>
+            <div class="message re">Siddhi he na</div>
+            <div class="message re">Uske alawa or sari achi he</div>
+
+            <div class="message time">Sun 11:20 AM</div>
+            <div class="message reply">11 Or 12 bhi he Abhi</div>
+            <div class="message se">Doosra school le liya mene?</div>
+            <div class="message se">💀wo tumhari pasand h</div>
+
+            <div class="message replyr">Doosra school le liya mene?</div>
+            <div class="message re">Acha konsa liya</div>
+            <div class="message replyr">💀wo tumhari pasand h</div>
+            <div class="message re">Asa kisne bola</div>
+
+            <div class="message time">Sun 3:25 PM</div>
+            <div class="message reply">Acha konsa liya</div>
+            <div class="message se">ECS</div>
+            <div class="message reply">Asa kisne bola</div>
+            <div class="message se">🤭🤭me kyu batau</div>
+
+            <div class="message replyr">ECS</div>
+            <div class="message re">Ecs konsa bala siddh ke samne bala ya koi or</div>
+            <div class="message replyr">🤭🤭me kyu batau</div>
+            <div class="message re">Ba na</div>
+
+            <div class="message se">Jhansi road pr ho h</div>
+            <div class="message se">Jo*</div>
+
+            <div class="message replyr">Jhansi road pr ho h</div>
+            <div class="message re">Acha</div>
+
+            <div class="message reply">Ba na</div>
+            <div class="message se">Kisi ne to bataya tha. Lekin naam nhi bta skte
+            </div>
+
+            <div class="message replyr">Kisi ne to bataya tha. Lekin naam nhi bta skte
+            </div>
+            <div class="message re">tum na</div>
+            <div class="message replyr">Kisi ne to bataya tha. Lekin naam nhi bta skte
+            </div>
+            <div class="message re">Mata bata moye na jana</div>
+            <div class="message re">Kio ki me sab janta hu</div>
+
+            <div class="message time">Sun 3:52 PM</div>
+
+            <div class="message reply">Kio ki me sab janta hu</div>
+            <div class="message se">Ha to bas🕺🕺 tum krte ho pasand ye sabko pta h🥹
+            </div>
+
+            <div class="message replyr">Ha to bas🕺🕺 tum krte ho pasand ye sabko pta h🥹
+            </div>
+            <div class="message re">Ye galat he</div>
+            <div class="message re">I don't like anty siddhi</div>
+
+            <div class="message time">You set the nickname for Anieee! to Ana Dosa Bali.</div>
+            <div class="message time">Mon 12:27 AM</div>
+
+            <div class="message reply">I don't like anty siddhi</div>
+            <div class="message se">U doooo definentlyyyy</div>
+            <div class="message se">Ye ana dosa bali kya h</div>
+            <div class="message se">😥</div>
+            <div class="message se">Dosa kab khaya mene</div>
+            <div class="message se">Tumaye aage</div>
+
+            <div class="message time">Mon 6:52 AM</div>
+
+            <div class="message replyr">Ye ana dosa bali kya h</div>
+            <div class="message re">Aap ka new name</div>
+            <div class="message replyr">U doooo definentlyyyy</div>
+            <div class="message re">Doooo nooot like</div>
+
+            <div class="message time">Mon 4:22 PM</div>
+
+            <div class="message re">Yo</div>
+            <div class="message re">Ek bat puchu</div>
+
+            <div class="message reply">Doooo nooot like</div>
+            <div class="message se">U doooo</div>
+            <div class="message reply">Ek bat puchu</div>
+            <div class="message se">Bolo</div>
+            <div class="message reply">Aap ka new name</div>
+            <div class="message se">Aree bhai😭😭 waise hi kam hai jo aur rakhne
+            </div>
+            <div class="message replyr">Aree bhai😭😭 waise hi kam hai jo aur rakhne
+            </div>
+            <div class="message re">Or kitne he
+            </div>
+            <div class="message reply">Or kitne he</div>
+            <div class="message se">Aree woh chodho</div>
+
+            <div class="message reply">Ek bat puchu</div>
+            <div class="message se">Bolo</div>
+
+            <div class="message replyr">Aree woh chodho</div>
+            <div class="message re">Pehle bata</div>
+
+            <div class="message se">Nhi btara</div>
+
+            <div class="message replyr">Nhi btara</div>
+            <div class="message re">Bolo</div>
+
+            <div class="message se">No</div>
+
+            <div class="message re">Yes</div>
+
+            <div class="message se">Kya karna jaanke?
+            </div>
+            <div class="message se">Arey tum baat to pucho!!!</div>
+
+            <div class="message replyr">Kya karna jaanke?
+            </div>
+            <div class="message re">Kuch to karu ga</div>
+
+            <div class="message se">Nhi btaungi</div>
+
+            <div class="message replyr">Nhi btaungi</div>
+            <div class="message re">Jaldi bolo</div>
+
+            <div class="message se">Siddhi k nick name</div>
+            <div class="message se">Jaaan ne</div>
+            <div class="message se">?</div>
+            <div class="message se">😂</div>
+            <div class="message se">Btw</div>
+
+            <div class="message re">Bata bata</div>
+
+            <div class="message se">Ha wo tumhe block kri wo</div>
+            <div class="message se">Tumne</div>
+            <div class="message se">Fake id se
+            </div>
+            <div class="message se">Request kyo bheji
+            </div>
+            <div class="message se">Real se bhejte krti wo accept kehri thi wo esa
+            </div>
+            <div class="message replyr">Fake id se
+            </div>
+            <div class="message re">Mene nhi bheji
+            </div>
+
+            <div class="message se">💀to kya mene bheji
+            </div>
+
+            <div class="message replyr">💀to kya mene bheji
+            </div>
+            <div class="message re">Bo to nhi pata
+            </div>
+
+            <div class="message se">Baat to pucho</div>
+            <div class="message se">Btao*</div>
+
+            <div class="message re">Use me is id pe nhi rakuga par</div>
+
+            <div class="message se">Kya puchna</div>
+            <div class="message reply">Use me is id pe nhi rakuga par</div>
+            <div class="message se">😭😭😭mat rkho 😭😭😭</div>
+
+            <div class="message re">Mere 2 id pe rakuga</div>
+
+            <div class="message reply">Mere 2 id pe rakuga</div>
+            <div class="message se">😭😭😭wow private id for siddhi</div>
+            <div class="message se">Baat to poochooooo!!!!!!!!!!</div>
+
+            <div class="message re">Bo tumhare sath ek or ati thi na kanji eyes thi uski</div>
+
+            <div class="message reply">Bo tumhare sath ek or ati thi na kanji eyes thi uski</div>
+            <div class="message se">Haan?</div>
+            <div class="message se">Kya hua uska?</div>
+
+            <div class="message replyr">Haan?</div>
+            <div class="message re">Bo aryan or mere liye mishty girl he</div>
+            <div class="message replyr">Kya hua uska?</div>
+            <div class="message re">Kuch nhi</div>
+
+            <div class="message reply">Bo aryan or mere liye mishty girl he</div>
+            <div class="message se">Mishty?</div>
+
+            <div class="message replyr">Mishty?</div>
+            <div class="message re">Ha</div>
+
+            <div class="message se">Ye kay hota?</div>
+
+            <div class="message re">Are kufiya</div>
+
+            <div class="message se">Mystery💀</div>
+            <div class="message se emoji">💀💀</div>
+            <div class="message se">Kuy</div>
+            <div class="message se">Usne kya krdiya</div>
+
+            <div class="message replyr">Mystery💀</div>
+            <div class="message re">Bo bhi kehe skte he</div>
+
+            <div class="message se">Wahi kehte</div>
+            <div class="message se">Tum galat kehre</div>
+            <div class="message se">Ejactly</div>
+            <div class="message se">😭</div>
+
+            <div class="message re">Acaha</div>
+
+            <div class="message se">Tum shinchan hi ho pure</div>
+
+            <div class="message re">To updet ho gaya hoga</div>
+
+            <div class="message se">Aryan to meko anay bulata</div>
+            <div class="message se">😭</div>
+            <div class="message se">Updet?💀</div>
+
+            <div class="message re">Are update</div>
+
+            <div class="message se">💀</div>
+
+            <div class="message re">New version</div>
+
+            <div class="message se">💀nvm</div>
+            <div class="message se">Tum</div>
+            <div class="message se">Ne</div>
+            <div class="message se">Baat nhi puchi</div>
+            <div class="message se">Pucho</div>
+
+            <div class="message replyr">Baat nhi puchi</div>
+            <div class="message re">Kya puchna tha</div>
+
+            <div class="message se">Tum bol re the na<br>
+                Ek baat puchu<br>
+                Ese krkr<br>
+            </div>
+
+            <div class="message reply">Ek bat puchu</div>
+            <div class="message se">.</div>
+
+            <div class="message replyr">Tum bol re the na
+                Ek baat puchu
+                Ese krkr
+            </div>
+            <div class="message re">Are he bulgaya uske bare me hi puch rha ta bas kah he ajj kal bo</div>
+            <div class="message re">Honted lagti he bo</div>
+
+            <div class="message replyr">💀nvm</div>
+            <div class="message re">Iska matlab kya hota he</div>
+
+            <div class="message se">🙏meri dost h me kch nhi bol rhi</div>
+
+            <div class="message reply">Iska matlab kya hota he</div>
+            <div class="message se">😭😭 nevermind</div>
+
+            <div class="message replyr">😭😭 nevermind</div>
+            <div class="message re">O</div>
+            <div class="message re">Pura likhne me alas ata he
+            </div>
+
+            <div class="message se emoji">😭😭</div>
+            <div class="message se">At least mystery ka mishty toh nhi kiya🥹
+            </div>
+            <div class="message replyr">At least mystery ka mishty toh nhi kiya🥹
+            </div>
+            <div class="message re">Matlab</div>
+            <div class="message se emoji">😥</div>
+
+            <div class="message reply">Bo aryan or mere liye mishty girl he</div>
+            <div class="message se">.</div>
+            <div class="message reply">Bo bhi kehe skte he</div>
+            <div class="message se">.</div>
+
+            <div class="message re">O acha</div>
+
+            <div class="message se">Tum he uski yaad aari kya</div>
+            <div class="message se">Milna us se</div>
+            <div class="message se">?</div>
+
+            <div class="message replyr">O acha</div>
+            <div class="message se">Haa</div>
+            <div class="message se">Ana Dosa Bali</div>
+            <div class="message se">Lao aryan se kru baat</div>
+            <div class="message se">Ana Dosa Bali</div>
+            <div class="message se">Mei</div>
+            <div class="message se">Ana Dosa Bali</div>
+            <div class="message se">Krlu?</div>
+
+            <div class="message replyr">Krlu?</div>
+            <div class="message re">Karle</div>
+
+            <div class="message se">Us se puchlu</div>
+            <div class="message se">Ki tum krte</div>
+            <div class="message se">Siddhi ko pasand ya nhi</div>
+
+            <div class="message se">Haan krega</div>
+            <div class="message se">Shart lga lo</div>
+
+            <div class="message re">Acha tum batao aryan tume kesa lagta he</div>
+
+            <div class="message se">💀</div>
+            <div class="message se">Kyu?</div>
+
+            <div class="message replyr">Kyu?</div>
+            <div class="message re">Bata to</div>
+
+            <div class="message se">Bhai jaisa</div>
+            <div class="message se"> Dost</div>
+            <div class="message se">Badminton bhadia kehlta</div>
+
+            <div class="message re">Acha</div>
+            <div class="message re">Or me</div>
+
+            <div class="message se">Tum bhi</div>
+            <div class="message se">Dost</div>
+            <div class="message se">Siddhi bhi yehi maanti</div>
+            <div class="message se">Tum usko pareshan kam kroge to</div>
+            <div class="message se">Sayad maan jaye</div>
+            <div class="message se">Tum usko mana lo</div>
+
+            <div class="message replyr">Tum usko mana lo</div>
+            <div class="message re">Mene kabhi use kuch mana hi nhi tum hi bolti ho</div>
+
+            <div class="message se">Tum usko mana lo..mtlb wo gussa h tumse</div>
+
+            <div class="message replyr">Tum usko mana lo..mtlb wo gussa h tumse</div>
+            <div class="message re">Kese manau</div>
+
+            <div class="message se">Toffee do</div>
+
+            <div class="message replyr">Toffee do</div>
+            <div class="message re">Pagal hu me</div>
+
+            <div class="message se">🫠bilkul</div>
+
+            <div class="message replyr">🫠bilkul</div>
+            <div class="message re">Are</div>
+
+            <div class="message se">Tum usko toffee do cutu si</div>
+
+            <div class="message replyr">Tum usko toffee do cutu si</div>
+            <div class="message re">Na</div>
+
+            <div class="message se">To tum rehn do🙏 tum nhi pata pare usko</div>
+
+            <div class="message replyr">To tum rehn do🙏 tum nhi pata pare usko</div>
+            <div class="message re">Uske gar jake uski mom se hi bat kar luga</div>
+
+
+            <div class="message se">Kehh seedha shaadi ka rishta</div>
+
+            <div class="message replyr">Kehh seedha shaadi ka rishta</div>
+            <div class="message re">Na</div>
+
+            <div class="message replyr">Kehh seedha shaadi ka rishta</div>
+            <div class="message re">Asa nhi use aunty se boluga ki ise bolo ase bhole bhale masum se bache se gusa na
+                hua kare</div>
+
+            <div class="message se">Bhola kon ?</div>
+
+            <div class="message replyr">Bhola kon ?</div>
+            <div class="message re">Me</div>
+
+            <div class="message se">🤣🤣🤣🤣joke ache marte tum</div>
+
+            <div class="message replyr">🤣🤣🤣🤣joke ache marte tum</div>
+            <div class="message re">Nhi hu kya</div>
+            <div class="message re">Siddhi siref frand he</div>
+
+            <div class="message reply">Siddhi siref frand he</div>
+
+            <div class="message se">Bilkul bhi nhi h esa...</div>
+
+            <div class="message replyr">Bilkul bhi nhi h esa...</div>
+            <div class="message re">To kesa he</div>
+
+            <div class="message se">Baad mein baat karti</div>
+            <div class="message se">Thoda</div>
+            <div class="message se">Busy</div>
+            <div class="message se">Hu</div>
+            <div class="message se">Abhi</div>
+
+            <div class="message re">Manjlo bartan</div>
+            <div class="message re">Byy</div>
+
+            <div class="message reply">Manjlo bartan</div>
+            <div class="message se">Yeh sab nhi karti mai</div>
+            <div class="message reply">Byy</div>
+            <div class="message se">Bye</div>
+
+            <div class="message re">Alsi kam chor</div>
+
+            <div class="message reply">Alsi kam chor</div>
+            <div class="message se emoji">EMoji</div>
+
+            <div class="message replyr">To kesa he</div>
+            <div class="message se">Crush h</div>
+            <div class="message se">Tumahri</div>
+
+            <div class="message replyr">Tumahri</div>
+            <div class="message re">No</div>
+
+            <div class="message time">Mon 6:36 PM</div>
+
+            <div class="message real">Story reply</div>
+            <div class="message re">Tumhara aesthetic kab khatam hoga</div>
+
+            <div class="message reply">Tumhara aesthetic kab khatam hoga</div>
+            <div class="message se">Abhi to shuru hua h 🕺🕺</div>
+
+            <div class="message replyr">Abhi to shuru hua h 🕺🕺</div>
+            <div class="message re">Face nhi dikhte he</div>
+
+            <div class="message reply">Face nhi dikhte he</div>
+            <div class="message se">Yehi to baat h🕺</div>
+
+            <div class="message replyr">Yehi to baat h🕺</div>
+            <div class="message re">Yhi to bata he</div>
+            <div class="message replyr">Yhi to bata he</div>
+            <div class="message re">Or dikkat bhi</div>
+            <div class="message re">Or batao park kabse chalu hoga</div>
+
+            <div class="meessage time">Mon 8:35 PM</div>
+
+            <div class="message reply">Or batao park kabse chalu hoga</div>
+            <div class="message se">Ab. To mera nhi hi hoga</div>
+            <div class="message se">IIT kr rhi hu me🙏</div>
+
+            <div class="message replyr">IIT kr rhi hu me🙏</div>
+            <div class="message re">Acha</div>
+            <div class="message re">Best of luck</div>
+            <div class="message re">Siddhi kya kar rhi he</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+    </div>
+</body>
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    const chatBox = document.querySelector(".chat-box");
+    const userInput = document.querySelector("#userInput");
+    const sendButton = document.querySelector("#sendButton");
+
+    // Load messages from localStorage
+    function loadMessages() {
+        const savedMessages = localStorage.getItem("chatMessages");
+        if (savedMessages) {
+            chatBox.innerHTML = savedMessages;
+            setTimeout(() => {
+                const savedScroll = localStorage.getItem("chatScrollPosition");
+                chatBox.scrollTop = savedScroll ? parseInt(savedScroll) : chatBox.scrollHeight;
+            }, 100);
+        }
+    }
+
+    // Save messages to localStorage
+    function saveMessages() {
+        localStorage.setItem("chatMessages", chatBox.innerHTML);
+    }
+
+    // Save scroll position
+    function saveScrollPosition() {
+        localStorage.setItem("chatScrollPosition", chatBox.scrollTop);
+    }
+
+    // Add message to chat
+    function addMessage(text, className) {
+        const message = document.createElement("div");
+        message.className = "message " + className;
+        message.textContent = text;
+        chatBox.appendChild(message);
+        saveMessages();
+        setTimeout(saveScrollPosition, 100);
+    }
+
+    // Clear chat on reload (optional, remove if not needed)
+    function clearChatOnReload() {
+        if (!localStorage.getItem("chatLoaded")) {
+            localStorage.removeItem("chatMessages");
+            localStorage.removeItem("chatScrollPosition");
+            localStorage.setItem("chatLoaded", "true");
+        }
+    }
+
+    clearChatOnReload();
+    loadMessages();
+
+    sendButton.addEventListener("click", function () {
+        if (userInput.value.trim() !== "") {
+            addMessage(userInput.value, "re"); // User message
+            userInput.value = "";
+            setTimeout(() => addMessage("Bot reply", "se"), 500); // Example bot reply
+        }
+    });
+
+    // Save scroll position whenever user scrolls
+    chatBox.addEventListener("scroll", saveScrollPosition);
+});
+</script>
+
+</html>
