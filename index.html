@@ -85,19 +85,21 @@
         .reply,
         .replyr {
             background: #f0f0f0;
-            color: gray;
+            color: rgb(0, 0, 0);
             font-size: 12px;
-            padding: 3px 8px;
+            padding: 6px 8px;
             margin: -3px 0 5px;
             border-radius: 10px;
         }
 
         .reply {
             align-self: flex-start;
+            border-left: 4px solid;
         }
 
         .replyr {
             align-self: flex-end;
+            border-right: 4px solid;
         }
 
         /* Real-time messages */
@@ -270,7 +272,7 @@
             <div class="message re">Toye bhadiya lagne se ka hoto</div>
 
             <div class="message tiem">Fri 8:38 PM</div>
-            
+
             <div class="message reply">Toye bhadiya lagne se ka hoto</div>
             <div class="message se">Sabko lagi 🙂‍↕️bhadia</div>
 
@@ -367,7 +369,7 @@
             <div class="message reply">I don't like anty siddhi</div>
             <div class="message se">U doooo definentlyyyy</div>
             <div class="message se">Ye ana dosa bali kya h</div>
-            <div class="message se">😥</div>
+            <div class="message se emoji">😥</div>
             <div class="message se">Dosa kab khaya mene</div>
             <div class="message se">Tumaye aage</div>
 
@@ -510,7 +512,7 @@
             <div class="message re">To updet ho gaya hoga</div>
 
             <div class="message se">Aryan to meko anay bulata</div>
-            <div class="message se">😭</div>
+            <div class="message se emoji">😭</div>
             <div class="message se">Updet?💀</div>
 
             <div class="message re">Are update</div>
@@ -553,6 +555,7 @@
 
             <div class="message replyr">😭😭 nevermind</div>
             <div class="message re">O</div>
+            <div class="message replyr">😭😭☻ nevermind</div>
             <div class="message re">Pura likhne me alas ata he
             </div>
 
@@ -590,12 +593,16 @@
             <div class="message se">Us se puchlu</div>
             <div class="message se">Ki tum krte</div>
             <div class="message se">Siddhi ko pasand ya nhi</div>
+            
+            <div class="message replyr">Siddhi ko pasand ya nhi</div>
+            <div class="message re">Mana kare ga</div>
 
             <div class="message se">Haan krega</div>
             <div class="message se">Shart lga lo</div>
 
             <div class="message re">Acha tum batao aryan tume kesa lagta he</div>
-
+            
+            <div class="message reply">Acha tum batao aryan tume kesa lagta he</div>
             <div class="message se">💀</div>
             <div class="message se">Kyu?</div>
 
@@ -685,7 +692,8 @@
             <div class="message se">Yeh sab nhi karti mai</div>
             <div class="message reply">Byy</div>
             <div class="message se">Bye</div>
-
+            
+            <div class="message replyr">Yeh sab nhi karti mai</div>
             <div class="message re">Alsi kam chor</div>
 
             <div class="message reply">Alsi kam chor</div>
@@ -743,67 +751,5 @@
         </div>
     </div>
 </body>
-<script>
-   document.addEventListener("DOMContentLoaded", function () {
-    const chatBox = document.querySelector(".chat-box");
-    const userInput = document.querySelector("#userInput");
-    const sendButton = document.querySelector("#sendButton");
-
-    // Load messages from localStorage
-    function loadMessages() {
-        const savedMessages = localStorage.getItem("chatMessages");
-        if (savedMessages) {
-            chatBox.innerHTML = savedMessages;
-            setTimeout(() => {
-                const savedScroll = localStorage.getItem("chatScrollPosition");
-                chatBox.scrollTop = savedScroll ? parseInt(savedScroll) : chatBox.scrollHeight;
-            }, 100);
-        }
-    }
-
-    // Save messages to localStorage
-    function saveMessages() {
-        localStorage.setItem("chatMessages", chatBox.innerHTML);
-    }
-
-    // Save scroll position
-    function saveScrollPosition() {
-        localStorage.setItem("chatScrollPosition", chatBox.scrollTop);
-    }
-
-    // Add message to chat
-    function addMessage(text, className) {
-        const message = document.createElement("div");
-        message.className = "message " + className;
-        message.textContent = text;
-        chatBox.appendChild(message);
-        saveMessages();
-        setTimeout(saveScrollPosition, 100);
-    }
-
-    // Clear chat on reload (optional, remove if not needed)
-    function clearChatOnReload() {
-        if (!localStorage.getItem("chatLoaded")) {
-            localStorage.removeItem("chatMessages");
-            localStorage.removeItem("chatScrollPosition");
-            localStorage.setItem("chatLoaded", "true");
-        }
-    }
-
-    clearChatOnReload();
-    loadMessages();
-
-    sendButton.addEventListener("click", function () {
-        if (userInput.value.trim() !== "") {
-            addMessage(userInput.value, "re"); // User message
-            userInput.value = "";
-            setTimeout(() => addMessage("Bot reply", "se"), 500); // Example bot reply
-        }
-    });
-
-    // Save scroll position whenever user scrolls
-    chatBox.addEventListener("scroll", saveScrollPosition);
-});
-</script>
 
 </html>
